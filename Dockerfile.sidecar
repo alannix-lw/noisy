@@ -1,0 +1,15 @@
+FROM lacework/datacollector:latest-sidecar as laceworkagent
+FROM python:3.8-alpine
+
+WORKDIR /app
+
+COPY requirements.txt /app/
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY *.py /app
+COPY *.json /app
+
+COPY --from=laceworkagent /var/lib/lacework-backup /var/lib/lacework-backup
+
+CMD ["sh", "-c", "/var/lib/lacework-backup/lacework-sidecar.sh && python noisy.py --config config.json"]

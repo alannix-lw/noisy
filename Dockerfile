@@ -1,7 +1,14 @@
-FROM python:2.7-alpine
-WORKDIR /
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . /
+FROM python:3.8-alpine
+
+WORKDIR /app
+
+COPY requirements.txt /app/
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY *.py /app
+COPY *.json /app
+
 ENTRYPOINT ["python", "noisy.py"]
+
 CMD ["--config", "config.json"]
