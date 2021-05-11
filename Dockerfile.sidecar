@@ -1,4 +1,4 @@
-FROM lacework/datacollector:latest-sidecar as laceworkagent
+FROM lacework/datacollector:3.8.2-sidecar as laceworkagent
 FROM python:3.8-alpine
 
 WORKDIR /app
